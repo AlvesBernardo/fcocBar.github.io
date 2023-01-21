@@ -105,18 +105,6 @@
 
 
 
-        $("#dataSend").click(function (){
-
-            let drink = $("#drink").val();
-            let name = $("#tags").val();
-
-
-            let csvContent = "data:text/csv;charset=utf-8,";
-
-            let row = rowArray.join(",");
-            csvContent += drink+ ","  +name + "\r\n";
-
-        })
 
 
     });
@@ -140,7 +128,10 @@
     <input type="submit" name="dataSend" id="dataSend">
 </form>
 
-<!--
+
+<?php
+
+
 if (isset($_POST["dataSend"])) {
 
     //$name = $_POST["selectName"];
@@ -185,7 +176,9 @@ if (isset($_POST["dataSend"])) {
 
 
 
-}-->
+}
+
+?>
     </div>
 </section>
 </body>
