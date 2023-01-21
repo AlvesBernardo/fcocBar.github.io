@@ -55,7 +55,10 @@ session_start();
     }
 
 
+    if (!isset($_SESSION["worker"])){
+        include_once "includes/login.php";
 
+    }
 
 
     ?>
