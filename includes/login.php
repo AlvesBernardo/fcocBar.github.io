@@ -13,10 +13,10 @@
                         <input type="password" class="login__input" placeholder="Password" name="dataPassWd"
                                id="dataPassWd">
                     </div>
-                    <button class="button login__submit">
-                        <span class="button__text">Log In Now</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
-                    </button>
+
+
+                        <input type="submit" name="dataSend" id="dataSend" >
+
                 </form>
                 <div class="social-login">
                     <h3>log in via</h3>
@@ -41,8 +41,88 @@
 
 <?php
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+        require_once 'db_credentials.php';
+
+        //  Connect to database server and select database
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
+
+        // Test if the connection was successfully established
+        // and if necessary, abort the script with a suitable error message
+        if(mysqli_connect_errno())
+            die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
+
+
+        // set charset
+        mysqli_set_charset($dbc, 'utf8');
+
+
+        $mail = $_POST["dataName"];
+        $passWd = $_POST["dataPassWd"];
+
+
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
+
+        if (mysqli_connect_errno()) {
+            die("Connect Error (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+        }
+
+
+        mysqli_set_charset($dbc, 'utf8');
+
+        $qry = "SELECT `dtName`  ,`dtPassword` , `dtType` FROM tbluser Where  `dtName` = ?";
+
+
+
+
+        $statement = mysqli_prepare($dbc, $qry);
+
+
+        // Testen ob die Abfrage ergfolgreich ausgeführt wurde
+        // und gegebenenfalls der Skript mit einer geeignete Fehlermeldung abbrechen
+        if (!$statement)
+            die("Wrong SQL: $qry Error: " . mysqli_error($dbc));
+
+
+        mysqli_stmt_bind_param($statement, "s", $mail);
+
+
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+
+
+        "numbers of rows" . mysqli_num_rows($result);
+
+
+        'Number of rows: ' . mysqli_num_rows($result);
+
+        //Check password
+        $data = mysqli_fetch_assoc($result);
+        $hash = $data["dtPassword"];
+        $worker = $data["dtType"];
+
+        if (password_verify($passWd, $hash)) {
+
+            echo '<br>Valides Passwort!';
+            $login = true;
+            session_start();
+
+            $_SESSION["name"] = $data["dtName"];
+            $_SESSION["worker"]= $data["dtType"];
+
+
+        } else {
+            echo '<br>Invalide Passwort.';
+
+        }
+
+        mysqli_free_result($result);
+        mysqli_stmt_close($statement);
+
+    }
 
 
 ?>

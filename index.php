@@ -56,7 +56,12 @@ session_start();
 
 
     if (!isset($_SESSION["worker"])){
-        include_once "includes/login.php";
+        include_once "includes/register.php";
+
+    }
+
+    if (isset($_SESSION["worker"])){
+        include_once "includes/bar.php";
 
     }
 
