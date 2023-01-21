@@ -20,11 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7b45c3d-0854-4298-94cf-6c3f5554b95d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/navBar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/navBar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674313397007</updated>
-      <workItem from="1674313398070" duration="4167000" />
+      <workItem from="1674313398070" duration="4827000" />
     </task>
     <servers />
   </component>
