@@ -1,30 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<?php
+
+$name = $_SESSION["name"];
+?>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="javascript" src="../jquery.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
-</head>
 
-<body>
+    <script>
+    
+$( document ).ready(function() {
+    
 
-<section id="page">
-
-    <div class="content">
-
-
-<script>
-    $(function() {
-
-        var drinkMenu = [
+        let drinkMenu = [
             "Peach liquor",
             "Vodka shot",
             "Beer",
@@ -36,8 +25,9 @@
             "Black vodka energy",
             "Vodka sprite",
             "Energy drinks"
-        ]
-        var availableTags = ["Alicia SPA",
+        ];
+
+        let availableTags = ["Alicia SPA",
             "Alin ROM",
             "Andrii UKR",
             "Anna ROM",
@@ -89,9 +79,10 @@
             "Theodore ROM",
             "Zoe GER",
             "Dion NED",
-            "Matthwer Rus"];
+            "Matthwer Rus",
+            "Ayomide Nig"];
 
-        $("#tags").autocomplete({
+        $("#nameData").autocomplete({
             source: availableTags,
 
         });
@@ -107,6 +98,7 @@
 
 
 
+ 
     });
 </script>
 
@@ -117,7 +109,7 @@
 
 
 
-    <input id="tags" name="nameData" type="text">
+    <input id="nameData" name="nameData" type="text">
 
 
     <label for="drink">Drink</label>
@@ -132,11 +124,12 @@
 <?php
 
 
-if (isset($_POST["dataSend"])) {
+if (isset($_POST["dataSend"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
 
     //$name = $_POST["selectName"];
     $drink = $_POST["selectDrink"];
     $try = $_POST["nameData"];
+    
 
 
     echo $drink . "<br>";
@@ -156,7 +149,7 @@ if (isset($_POST["dataSend"])) {
 
 
 
-    $filename = "stock.csv";
+    $filename = $name ."-stock.csv";
 
 
   
@@ -174,8 +167,43 @@ if (isset($_POST["dataSend"])) {
 // close the file
     fclose($f);
 
+    require_once 'db_credentials.php';
+
+    //  Connect to database server and select database
+    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
+
+    // Test if the connection was successfully established
+    // and if necessary, abort the script with a suitable error message
+    if(mysqli_connect_errno())
+        die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
 
 
+    // set charset
+    mysqli_set_charset($dbc, 'utf8');
+
+
+
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
+
+        if (mysqli_connect_errno()) {
+            die("Connect Error (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+        }
+
+
+        mysqli_set_charset($dbc, 'utf8');
+
+       $id= $_SESSION["id"];
+
+        $qry = "INSERT INTO `tblBar`(`dtServedTo`, `dtDrink`, `fiServer `) VALUES (?,?,?)";
+
+        $statement = mysqli_prepare($dbc, $qry);
+
+        mysqli_stmt_bind_param($statement, "sss", $try,$drink,$id);
+
+
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 }
 
 ?>

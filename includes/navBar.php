@@ -15,10 +15,12 @@ session_start();
                 echo '<li><a href="index.php?page=bar">Bar Service</a></li>';
                 echo '<li><a href="index.php?page=register">Admin</a></li>';
                 echo '<li><a href="index.php?page=register">Charts</a></li>';
+                echo '<li><a href="index.php?page=logout"Logout</a></li>';
 
             }
     if (isset($_SESSION["worker"]) && $_SESSION["worker"] == 1) {
         echo '<li><a href="index.php?page=bar">Bar Service</a></li>';
+        echo '<li><a href="index.php?page=logout">Logout</a></li>';
 
 
     }

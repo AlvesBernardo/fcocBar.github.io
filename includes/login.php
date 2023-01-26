@@ -72,7 +72,7 @@
 
         mysqli_set_charset($dbc, 'utf8');
 
-        $qry = "SELECT `dtName`  ,`dtPassword` , `dtType` FROM tbluser Where  `dtName` = ?";
+        $qry = "SELECT `idUser` ,`dtName`  ,`dtPassword` , `dtType` FROM tbluser Where  `dtName` = ?";
 
 
 
@@ -112,6 +112,7 @@
 
             $_SESSION["name"] = $data["dtName"];
             $_SESSION["worker"]= $data["dtType"];
+            $_SESSION["id"]= $data["idUser"];
 
 
         } else {
