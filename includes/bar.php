@@ -1,6 +1,7 @@
 <?php
 
 $name = $_SESSION["name"];
+
 ?>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="javascript" src="../jquery.js"></script>
@@ -10,7 +11,7 @@ $name = $_SESSION["name"];
 
     <script>
     
-$( document ).ready(function() {
+$(document).ready(function() {
     
 
         let drinkMenu = [
@@ -20,27 +21,38 @@ $( document ).ready(function() {
             "Cider",
             "Tequila",
             "Berliner Luft",
-            "Slovakian drink",
+            "Rocket shot",
             "Vodka energy",
             "Black vodka energy",
             "Vodka sprite",
-            "Energy drinks"
+            "Energy drinks",
+            "Mochito"
         ];
 
         let availableTags = ["Alicia SPA",
+            "Andreas CYP",
+            "Anastasia MAC",
+            "Anais LUX",
+            "Alikhan KAZ",
+            "Alex VNM",
             "Alin ROM",
             "Andrii UKR",
             "Anna ROM",
             "Anne-Sophie GER",
             "Aurelien FRA",
             "Bao VNM",
-            "Bogdan UKR",
+            "Bohdan UKR",
+            "Caterina MOL",
             "Caterina ITA",
             "Clarissa ITA",
+            "David SLO",
+            "Dany POR",
             "Dennis LAT",
             "Dyanne NED",
             "Egg TUR",
             "Ekatrina BUL",
+            "Filipe POR",
+            "Franken NED",
             "Francisco ARG",
             "Gabby TAW",
             "Gabriel ARU",
@@ -48,25 +60,39 @@ $( document ).ready(function() {
             "Iarina ROM",
             "Ilario SOA",
             "Isabella USA",
+            "Jermain NED",
             "Jan MEX",
+            "Joe LUX",
+            "Julian NED",
+            "Justin ROM",
+            "Kryss MOL",
             "Kelvin EST",
             "Kenan FRA",
             "Lenox ZW",
             "Lorand BUL",
             "Lucas POR",
+            "Laura ROM",
+            "Luis NED",
+            "Marian EST",
+            "Marit NED",
             "Maria UKR",
             "Martin NED",
+            "Martin BUL",
             "Max GER",
+            "Max BOL",
             "Melany COL",
             "Michael MAL",
+            "Mitch ROM",
             "Neo TAW",
             "Nico ARG",
             "Nikolay LAT",
+            "Nathan POR",
+            "Nathan R.POR",
             "Olek POL",
             "Oliver NOR",
             "Patric ROM",
             "Peter HUN",
-            "Poul UKR",
+            "Paul UKR",
             "Radu ROM",
             "Rares ROM",
             "Rares ROM 2",
@@ -79,7 +105,8 @@ $( document ).ready(function() {
             "Theodore ROM",
             "Zoe GER",
             "Dion NED",
-            "Matthwer Rus",
+            "Malika NED",
+            "Matthew Rus",
             "Ayomide Nig"];
 
         $("#nameData").autocomplete({
@@ -98,14 +125,16 @@ $( document ).ready(function() {
 
 
 
- 
+      
+
     });
 </script>
+<section id="menuSec">
 
-<h1>Bar service</h1>
+<h1 id="menuTitle">Bar service</h1>
 
 
-<form method="post" autocomplete="on">
+<form method="post" autocomplete="on" class="barInput">
 
 
 
@@ -117,8 +146,14 @@ $( document ).ready(function() {
     </select>
 
 
+    <input type="number" name="dataMany" placeholder="How many drink" id="dataAmount">
+
+
+
     <input type="submit" name="dataSend" id="dataSend">
+    
 </form>
+
 
 
 <?php
@@ -129,13 +164,19 @@ if (isset($_POST["dataSend"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
     //$name = $_POST["selectName"];
     $drink = $_POST["selectDrink"];
     $try = $_POST["nameData"];
-    
+    $amount = $_POST["dataMany"];
+    if (empty($amount)){
+        $amount = 1;
+    }
+    echo $amount. "<br>";;
+
 
 
     echo $drink . "<br>";
     echo $try . "<br>";
 
 
+    $name = $_SESSION["name"];
 
     date_default_timezone_set('Europe/Luxembourg');
 
@@ -149,12 +190,12 @@ if (isset($_POST["dataSend"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-    $filename = $name ."-stock.csv";
+    $filename = "stock.csv";
 
 
-  
+
     // open csv file for writing
-    $f = fopen( $filename, 'a+');
+    $f = fopen( $filename, 'w+');
 
     if ($f === false) {
         die('Error opening the file ' . $filename);
@@ -166,6 +207,8 @@ if (isset($_POST["dataSend"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
 
 // close the file
     fclose($f);
+
+
 
     require_once 'db_credentials.php';
 
@@ -193,17 +236,20 @@ if (isset($_POST["dataSend"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_set_charset($dbc, 'utf8');
 
        $id= $_SESSION["id"];
+       var_dump($id);
+        for ($i=0; $i <$amount ; $i++) { 
+            $qry = "INSERT INTO `tblBar` (`dtServedTo`, `dtDrink`, `fiServer`, `dtTime`) VALUES (?,?,?,?)";
 
-        $qry = "INSERT INTO `tblBar`(`dtServedTo`, `dtDrink`, `fiServer `) VALUES (?,?,?)";
-
-        $statement = mysqli_prepare($dbc, $qry);
-
-        mysqli_stmt_bind_param($statement, "sss", $try,$drink,$id);
-
-
-        mysqli_stmt_execute($statement);
-
-        $result = mysqli_stmt_get_result($statement);
+            $statement = mysqli_prepare($dbc, $qry);
+    
+            mysqli_stmt_bind_param($statement, "ssis", $try,$drink,$id,$dat);
+    
+    
+            mysqli_stmt_execute($statement);
+    
+            $result = mysqli_stmt_get_result($statement);
+        }
+     
 }
 
 ?>

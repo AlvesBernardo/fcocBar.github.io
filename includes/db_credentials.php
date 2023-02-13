@@ -1,8 +1,8 @@
 <?php
 
-    define('DB_HOST', 'mysql');
+    define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
-    define('DB_PW', 'qwerty');
+    define('DB_PW', '');
     define('DB_NAME', 'fcoc');
 
 

@@ -111,6 +111,8 @@
             session_start();
 
             $_SESSION["name"] = $data["dtName"];
+            var_dump( $_SESSION["name"]);
+            header("Location: index.php?page=bar");
             $_SESSION["worker"]= $data["dtType"];
             $_SESSION["id"]= $data["idUser"];
 
