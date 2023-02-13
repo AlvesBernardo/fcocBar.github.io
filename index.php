@@ -9,6 +9,9 @@ session_start();
     <meta charset="UTF-8">
     <title>DJ & FCOC</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="shortcut icon" href="images/login/logo_black%20(1).jpg" type="image/x-icon">
@@ -66,7 +69,16 @@ session_start();
     }
 
     if (isset($_SESSION["worker"])){
-        include_once "includes/bar.php";
+
+        if ($page == "bar") {
+            include_once "includes/bar.php";
+        }else if ($page == "charts") {
+            include_once "includes/chart.php";
+        } else if ($page == "logout") {
+            include_once "includes/logout.php";
+        } else {
+            include_once "includes/bar.php";
+        }    
 
     }
 
